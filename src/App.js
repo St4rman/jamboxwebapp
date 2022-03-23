@@ -10,8 +10,8 @@ function App() {
 
   return (
     <div className="App">
-      <h2> Basic data table</h2>
-      <div>
+      <h2 className="Title"> Game Search </h2>
+      <div className="Table panel">
         <MainTable/>
       </div>
     </div>
