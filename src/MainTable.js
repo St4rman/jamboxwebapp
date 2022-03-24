@@ -101,6 +101,7 @@ const collectionlist = [
     'topselling_paid_games',
     'topselling_grossing_games'
 ]
+const keylist =[1,2,3,4,5,6,7,8,9,10,11]
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(odd)': {
@@ -161,7 +162,7 @@ export default function MainTable() {
 
     const base = `http://18.222.213.91:4000/data/`
 
-    const seacrhapiurl = `http://18.222.213.91:4000/data/search?search=${seacrhstr}&key=!jambox$123&format=json`
+    const seacrhapiurl = `http://18.222.213.91:4000/data/search?search=${seacrhstr}}&num=${num-1}&key=!jambox$123&format=json`
     const searchdownload = `http://18.222.213.91:4000/data/search?search=${seacrhstr}&key=!jambox$123`
 
     function SearchApiFire(){
@@ -177,8 +178,8 @@ export default function MainTable() {
             })
     }
 
-    const listdownload = `${base}list?collection=${filter}&category=${category}&num=${num}&key=!jambox$123`
-    const finalapi = `${base}list?collection=${filter}&category=${category}&num=${num}&key=!jambox$123&format=json`
+    const listdownload = `${base}list?collection=${filter}&category=${category}&num=${num-1}&key=!jambox$123`
+    const finalapi = `${base}list?collection=${filter}&category=${category}&num=${num-1}&key=!jambox$123&format=json`
 
     function ListApiFire(){
 
@@ -217,13 +218,22 @@ export default function MainTable() {
 
             
             <Stack spacing={5} direction="row">
-                <Box sx = {{ minWidth: '85%', minHeight: "100%"}}>
+                <Box sx = {{ minWidth: '60%', minHeight: "100%"}}>
                 <TextField 
                         fullWidth
                         id="outlined-basic" 
                         label ="Search...." 
                         variant="standard" 
                         onChange={stringChange}
+                    />
+                </Box>
+                <Box sx={{ minWidth: "20%"}}>
+                    <TextField 
+                        id="outlined-basic" 
+                        label ="number" 
+                        type="number"
+                        variant="outlined" 
+                        onChange={numChange}
                     />
                 </Box>
                 <IconButton onClick= {SearchApiFire} variant="contained"><SearchRoundedIcon/></IconButton>
@@ -325,14 +335,12 @@ export default function MainTable() {
             </TableRow>
             </TableHead>
             <TableBody>
-            {rows.map((row) => (
+            {rows.map((row, index) => (
                 < StyledTableRow 
-                key={row.title}
+                key ={index}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                <TableCell component="th" scope="row">
-                    {row.title}
-                </TableCell>
+                <TableCell component="th" scope="row">{row.title}</TableCell>
                 <TableCell align="right">{row.installs}</TableCell>
                 <TableCell align="right">{row.minInstalls}</TableCell>
                 <TableCell align="right">{row.maxInstalls}</TableCell>
@@ -345,6 +353,7 @@ export default function MainTable() {
                 <TableCell align="right">{row.released}</TableCell>
                 </ StyledTableRow>
             ))}
+            
             </TableBody>
         </Table>
         </TableContainer>
